@@ -58,6 +58,32 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  //add eventistner http://keycode.info/ keydown space keycode 32
+  window.addEventListener('keydown', function (e) {
+    //debugger;
+    //console.log(e.keyCode);
+    // we are looking for only one querySelector("string") vs many querySelectorAll
+    //  is there a audio element on the page that has data-key="65"??
+    //  we use attribute selector data-key="", e.keyCode is JS variable
+    // document.querySelector(`audio[data-key="65"]`) << value of data-key needs to be a string format
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    //console.log(audio); //<audio data-key="71" src="sounds/boom.wav"></audio>
+    if(!audio) return; // if no matching key function exits
+    // var promise = HTMLMediaElement.play();  https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play
+    audio.currentTime = 0;
+    audio.play();
+    //console.log(key);
+    // in jQuery key.addClass('playing');
+    key.classList.add('playing');
+  });
+
+  function removeTransition(e) {
+    console.log(e);
+    if(e.propertyName !== 'transform') return; // skip if it's not transform
+  }
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 
 </script>
 
